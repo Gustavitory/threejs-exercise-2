@@ -123,3 +123,124 @@
 - `depthPacking`: Tipo de empaquetado de profundidad
 - `displacementScale`: Escala del desplazamiento
 - `displacementBias`: Sesgo del desplazamiento
+
+## Tipos de Cámaras
+
+1. **PerspectiveCamera**
+
+   - Cámara que simula la visión humana
+   - Parámetros principales:
+     - `fov`: Campo de visión en grados (45-75 recomendado)
+     - `aspect`: Relación de aspecto (width/height)
+     - `near`: Distancia mínima de renderizado
+     - `far`: Distancia máxima de renderizado
+   - Ejemplo:
+     ```javascript
+     const camera = new THREE.PerspectiveCamera(
+       75,
+       window.innerWidth / window.innerHeight,
+       0.1,
+       1000
+     );
+     camera.position.set(0, 5, 10);
+     ```
+
+2. **OrthographicCamera**
+
+   - Cámara sin perspectiva (proyección paralela)
+   - Útil para vistas 2D o isométricas
+   - Parámetros principales:
+     - `left`, `right`, `top`, `bottom`: Límites de la vista
+     - `near`, `far`: Planos de recorte
+   - Ejemplo:
+     ```javascript
+     const camera = new THREE.OrthographicCamera(-10, 10, 10, -10, 0.1, 1000);
+     camera.position.set(0, 0, 10);
+     ```
+
+3. **CubeCamera**
+   - Crea un mapa de entorno en tiempo real
+   - Útil para reflejos dinámicos
+   - Ejemplo:
+     ```javascript
+     const cubeCamera = new THREE.CubeCamera(0.1, 1000, 256);
+     cubeCamera.position.set(0, 0, 0);
+     ```
+
+## Tipos de Luces
+
+1. **AmbientLight**
+
+   - Luz ambiental que ilumina todo uniformemente
+   - No tiene dirección ni posición
+   - Ejemplo:
+     ```javascript
+     const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+     scene.add(ambientLight);
+     ```
+
+2. **DirectionalLight**
+
+   - Luz que viene de una dirección específica
+   - Simula la luz del sol
+   - Ejemplo:
+     ```javascript
+     const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+     directionalLight.position.set(5, 5, 5);
+     scene.add(directionalLight);
+     ```
+
+3. **PointLight**
+
+   - Luz que emana de un punto en todas direcciones
+   - Simula una bombilla
+   - Ejemplo:
+     ```javascript
+     const pointLight = new THREE.PointLight(0xffffff, 1, 100);
+     pointLight.position.set(0, 10, 0);
+     scene.add(pointLight);
+     ```
+
+4. **SpotLight**
+
+   - Luz con forma de cono
+   - Útil para focos o linternas
+   - Ejemplo:
+     ```javascript
+     const spotLight = new THREE.SpotLight(0xffffff, 1);
+     spotLight.position.set(0, 10, 0);
+     spotLight.angle = Math.PI / 4;
+     spotLight.penumbra = 0.1;
+     scene.add(spotLight);
+     ```
+
+5. **HemisphereLight**
+
+   - Luz que simula el cielo y el suelo
+   - Útil para iluminación exterior
+   - Ejemplo:
+     ```javascript
+     const hemisphereLight = new THREE.HemisphereLight(0xffffbb, 0x080820, 1);
+     scene.add(hemisphereLight);
+     ```
+
+6. **RectAreaLight**
+   - Luz que emana de un rectángulo
+   - Útil para simular ventanas o pantallas
+   - Ejemplo:
+     ```javascript
+     const rectLight = new THREE.RectAreaLight(0xffffff, 1, 4, 4);
+     rectLight.position.set(0, 5, 0);
+     scene.add(rectLight);
+     ```
+
+### Parámetros Comunes de Luces
+
+- `color`: Color de la luz (hexadecimal o string)
+- `intensity`: Intensidad de la luz (default: 1)
+- `visible`: Booleano para mostrar/ocultar la luz
+- `castShadow`: Booleano para habilitar sombras
+- `shadow`: Objeto con configuraciones de sombras
+  - `mapSize`: Resolución del mapa de sombras
+  - `bias`: Ajuste para evitar artefactos
+  - `radius`: Suavizado de bordes de sombras
